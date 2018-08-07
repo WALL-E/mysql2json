@@ -2,4 +2,5 @@
 dump data from mysql to json
 
 # TODO
--[*] 命令行参数
+
+- [x] 命令行参数
