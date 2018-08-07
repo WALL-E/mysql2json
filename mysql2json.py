@@ -1,24 +1,42 @@
 #!/usr/bin/env python3.6
+#coding:utf-8
+
+import argparse
 
 import MySQLdb
 import json
 
-def load_data():
-    db = MySQLdb.connect("127.0.0.1", "root", "123456", "qos", charset='utf8' )
+def load_data(args):
+    db = MySQLdb.connect(host=args.host, port=args.port, user=args.user, password=args.password, db=args.db, charset=args.charset)
     cursor = db.cursor(MySQLdb.cursors.DictCursor)
 
-    sql = "select name,base_currency,quote_currency,price_decimal,amount_decimal from app_symbol"
-    cursor.execute(sql)
-    results = cursor.fetchall()
+    try:
+        sql = "select %s from %s" % (args.field, args.table)
+        cursor.execute(sql)
+        results = cursor.fetchall()
+    except MySQLdb.OperationalError as e:
+        print("error:", e)
+        return None
     db.close()
 
     return results
    
 
 def main():
-    data = load_data()
-    json_data = json.dumps(data, ensure_ascii=False)
-    print(json_data)
+    parser = argparse.ArgumentParser(description='Dump data from mysql to json')
+    parser.add_argument('--host', type=str, default="127.0.0.1", help='server ip')
+    parser.add_argument('--port', type=int, default=3306, help='server port')
+    parser.add_argument('--user', type=str, default="root", help='username')
+    parser.add_argument('--password', default="123456", type=str, help='password')
+    parser.add_argument('--db', default="qos", type=str, help='database name')
+    parser.add_argument('--table', type=str, help='table name')
+    parser.add_argument('--field', type=str, default="*", help='table filed')
+    parser.add_argument('--charset', type=str, default="utf8", help='charset')
+    args = parser.parse_args()
+    data = load_data(args)
+    if data:
+        json_data = json.dumps(data, ensure_ascii=False)
+        print(json_data)
 
 if __name__ == '__main__':
     main()
