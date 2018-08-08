@@ -38,14 +38,14 @@ def load_data(args):
 
 def main():
     parser = argparse.ArgumentParser(description='Dump data from mysql to json')
-    parser.add_argument('--host', type=str, default="127.0.0.1", help='server ip')
-    parser.add_argument('--port', type=int, default=3306, help='server port')
-    parser.add_argument('--user', type=str, default="root", help='username')
-    parser.add_argument('--password', default="123456", type=str, help='password')
-    parser.add_argument('--db', default="qos", type=str, help='database name')
-    parser.add_argument('--table', default="app_symbol", type=str, help='table name')
-    parser.add_argument('--field', type=str, default="*", help='table filed')
-    parser.add_argument('--charset', type=str, default="utf8", help='charset')
+    parser.add_argument('--host', type=str, default="127.0.0.1", help='Connect to host')
+    parser.add_argument('--port', type=int, default=3306, help='Port number to use for connection')
+    parser.add_argument('--user', type=str, default="root", help='User for login')
+    parser.add_argument('--password', default="123456", type=str, help='Password to use when connecting to server')
+    parser.add_argument('--db', default="qos", type=str, help='Database to use')
+    parser.add_argument('--table', default="app_symbol", type=str, help='Table to use')
+    parser.add_argument('--field', type=str, default="*", help='Filed to select')
+    parser.add_argument('--charset', type=str, default="utf8", help='the connection character set will be changed to this character set')
     args = parser.parse_args()
     data = load_data(args)
     if data:
