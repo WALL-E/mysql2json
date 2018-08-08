@@ -20,4 +20,4 @@ pip3 install mysqlclient
 
 ## TODO
 
-- [x] 命令行参数
+- [x] Command-line parsing
