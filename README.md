@@ -14,7 +14,8 @@ pip3 install mysqlclient
 ## RUN
 
 ```
-./mysql2json.py  --host=127.0.0.1 --port=3306 --user=root --password=123456 --db=qos --table=app_symbol --field=name,created_at
+./mysql2json.py  --host=127.0.0.1 --port=3306 --user=root --password=123456 \
+                 --db=qos --table=app_symbol --field=name,created_at
 ```
 
 ## TODO
